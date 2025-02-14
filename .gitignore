@@ -1,5 +1,6 @@
 # env
 env/backend.env
+env/.env.development
 
 # IDE
 .vscode/
@@ -9,6 +10,3 @@ env/backend.env
 
 # Django
 *.sqlite3
-
-# Frontend
-node_modules/
