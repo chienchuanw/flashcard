@@ -5,7 +5,7 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-environ.Env().read_env(env_file=BASE_DIR.parent / "env" / "backend.env")
+environ.Env().read_env(env_file=BASE_DIR.parent / "env" / ".env.development")
 
 
 # Quick-start development settings - unsuitable for production
@@ -15,9 +15,13 @@ environ.Env().read_env(env_file=BASE_DIR.parent / "env" / "backend.env")
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DJANGO_DEBUG", default=False)
 
 ALLOWED_HOSTS = []
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 
 # Application definition
@@ -31,7 +35,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
+INSTALLED_APPS += [
+    "rest_framework",
+    "corsheaders",
+    "apis",
+]
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
